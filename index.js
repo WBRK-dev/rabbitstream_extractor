@@ -1,5 +1,18 @@
-import * as logger from "./src/utils/logger.js";
+import { logger } from "./src/utils/index.js";
+import { getIframe } from "./src/api/index.js";
+import extractor from "./src/extractor/index.js";
 
-logger.info("This is an info message");
-logger.error("This is an error message");
-logger.success("This is an success message");
+const serverId = "4841446";
+
+(async () => {
+    try {
+
+        const iframe = await getIframe(serverId);
+        logger.irrelevant(iframe);
+
+        await extractor(iframe);
+
+    } catch (error) {
+        logger.error(error.stack);
+    }
+})();
