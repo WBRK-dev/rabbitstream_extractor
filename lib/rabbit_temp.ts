@@ -4,8 +4,8 @@ import cryptoJs from "crypto-js";
 const CryptoJS = cryptoJs;
 import { logger } from "../src/utils/index.js";
 
-const domain = 'grostembed.online';
-const embed_url = "https://" + domain + "/v2/embed-4/";
+let domain = 'grostembed.online';
+let embed_url = "https://" + domain + "/v2/embed-4/";
 const referrer = "https://flixhq.to/";
 const user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36";
 
@@ -111,6 +111,16 @@ const nodeList = {
     length: 1,
 }
 
+function setDomain(iframeLink: string) {
+    logger.info(iframeLink)
+    const url = new URL(iframeLink);
+    domain = url.host;
+    embed_url = "https://" + domain + "/v2/embed-4/";
+    canvas.baseUrl = iframeLink;
+    fake_window.origin = "https://" + url.host,
+    fake_window.location.href = iframeLink;
+    fake_window.location.origin = "https://" + url.host;
+}
 
 function get(index: number) {
     return arr[index];
@@ -741,7 +751,9 @@ const getMeta = async (url: string) => {
     meta.content = content;
 }
 
-export default async (xrax: string) => {
+export default async (xrax: string, iframeLink: string) => {
+    setDomain(iframeLink);
+
     await getMeta((embed_url + xrax + "?z="));
     fake_window.xrax = xrax;
     await V();
@@ -760,10 +772,11 @@ export default async (xrax: string) => {
         'sec-fetch-site': 'same-origin',
         'sec-fetch-mode': 'cors',
         'sec-fetch-dest': 'empty',
-        'referer': 'https://' + domain + '/v2/embed-4/YtWrKhOWfk3v?z=',
+        'referer': iframeLink,
         'accept-language': 'zh-CN,zh;q=0.9',
         'priority': 'u=1, i'
     }
+    throw new Error();
     let resp_json = await (await fetch(getSourcesUrl, {
         "headers": headers,
         "method": "GET",

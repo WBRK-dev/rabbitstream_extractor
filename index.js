@@ -2,7 +2,7 @@ import { logger } from "./src/utils/index.js";
 import { getIframe } from "./src/api/index.js";
 import extractor from "./src/extractor/index.js";
 
-const serverId = "4841446";
+const serverId = "1599818";
 
 (async () => {
     try {
