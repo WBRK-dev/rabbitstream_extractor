@@ -16,3 +16,18 @@ export async function getIframe(serverId) {
     return await fetch(`https://flixhq.to/ajax/episode/sources/${serverId}`, { headers })
         .then(r => r.json());
 }
+
+export async function getIframeContent(iframeLink) {
+    return await fetch(iframeLink, { headers })
+        .then(r => r.text());
+}
+
+export async function getIframeData(iframeLink) {
+    const html = await getIframeContent(iframeLink);
+
+    return {
+        id: html.split('<div id="vidcloud-player" data-id="')[1].split('"')[0],
+        realId: html.split('" data-realid="')[1].split('"')[0].split('"')[0],
+        jCrt: html.split('<meta name="j_crt" content="')[1].split('"')[0],
+    };
+}

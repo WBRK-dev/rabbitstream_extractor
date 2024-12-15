@@ -1,5 +1,3 @@
-// const { TextDecoder, TextEncoder, fetch, iframeUrl } = window.inject;
-
 let wasmBuffer = new Uint8Array([
     0x00, 0x61, 0x73, 0x6d, 0x01, 0x00, 0x00, 0x00, 0x01, 0xf0, 0x01, 0x20,
     0x60, 0x02, 0x7f, 0x7f, 0x01, 0x7f, 0x60, 0x03, 0x7f, 0x7f, 0x7f, 0x01,
@@ -9068,26 +9066,26 @@ let wasmBuffer = new Uint8Array([
 
 
 // Store the original fetch function
-// const originalFetch = window.fetch;
+const originalFetch = window.fetch;
 
-// // Override the fetch function
-// window.fetch = async function (input, init = {}) {
-//     // Modify the headers to include your custom Referer
-//     const modifiedHeaders = new Headers({});
+// Override the fetch function
+window.fetch = async function (input, init = {}) {
+    // Modify the headers to include your custom Referer
+    const modifiedHeaders = new Headers({});
 
-//     // Set or change the Referer header
-//     // modifiedHeaders.set('Referer', 'https://flixhq.to');
-//     // modifiedHeaders.set("User-Agent:", "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36")
+    // Set or change the Referer header
+    // modifiedHeaders.set('Referer', 'https://flixhq.to');
+    // modifiedHeaders.set("User-Agent:", "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36")
 
-//     // Create a modified init object
-//     const modifiedInit = {
-//         ...init,
-//         headers: modifiedHeaders,
-//     };
+    // Create a modified init object
+    const modifiedInit = {
+        ...init,
+        headers: modifiedHeaders,
+    };
 
-//     // Call the original fetch function with modified arguments
-//     return originalFetch(input, init.headers);
-// };
+    // Call the original fetch function with modified arguments
+    return originalFetch(input, init.headers);
+};
 let fakeElementDocument;
 let i;
 function setup() {
@@ -9484,10 +9482,10 @@ function setup() {
         }, importedObject.wbg['__wbg_timeOrigin_f462952854d802ec'] = function (AW) {
 
             return getFromArray(AW).timeOrigin;
-        }, importedObject.wbg['__wbg_instanceof_Window_cee7a886d55e7df5'] = function (AW) {
+        }, importedObject.wbg['__wbg_instanceof_fakeWindow_cee7a886d55e7df5'] = function (AW) {
             let Ar;
             try {
-                Ar = getFromArray(AW) instanceof Window;
+                Ar = getFromArray(AW) instanceof fakeWindow;
             } catch (Ad) {
                 Ar = false;
             }
@@ -9572,7 +9570,7 @@ function setup() {
 
                 return addToStack(fakeWindow);
             }, arguments);
-        }, importedObject.wbg['__wbg_window_adc720039f2cb14f'] = function () {
+        }, importedObject.wbg['__wbg_fakeWindow_adc720039f2cb14f'] = function () {
             return AT(function () {
 
                 return addToStack(fakeWindow);
@@ -9599,7 +9597,7 @@ function setup() {
                 let first = textDecodeSubArrayBuff(AW, Ar)
                 console.log(first)
                 const Ad = eval(first);
-                fakeWindow.pid = window.pid
+                fakeWindow.pid = fakeWindow.pid
                 console.log(first, Ad, "__wbg_eval_c824e170787ad184")
                 return addToStack(Ad);
             }, arguments);
@@ -9791,8 +9789,21 @@ let y = (q, j) => {
 let main = async () => {
 
 
-    
     fakeWindow.xrax = document.querySelector("#vidcloud-player").getAttribute("data-id")
+
+    // fakeWindow.pid = "";
+    // fakeWindow.navigator = {
+    //     userAgent: "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+    //     webdriver: false
+    // },
+    //     fakeWindow.performance = {
+    //         timeOrigin: dateNow
+    //     },
+    //     fakeWindow.location = {},
+    //     fakeWindow.origin = "",
+    //     fakeWindow.browser_version = 1878522368,
+    //     fakeWindow.ReactNativeWebView = undefined,
+    //     fakeWindow.crypto = fakeWindow.crypto
 
     await l()
     setup()
